@@ -18,10 +18,10 @@ else:
 with open('verses-only.txt') as f:
   verses = f.read().lower()
 
-print "Characters read: %d" %len(verses)
-#verses = verses[:1000000]
+print "\n{:16}{:>12,}".format("Verses read:",len(fa('\n',verses)))
+print "{:16}{:>12,}".format("Characters read:",len(verses))
 allWords = fa('\\b[a-zA-Z-_]+\\b',verses)
-print "Words read: %d" %len(allWords)
+print "{:16}{:>12,}".format("Words read:",len(allWords))
 uniqueWords = list(set(allWords))
 
 t1_counter = time.time()
@@ -36,9 +36,12 @@ for i in allWords:
   wordTracker[i] += 1
 t2_tracker = time.time()
 sortedWordTracker = sorted(wordTracker.iteritems(),key=lambda x: x[1],reverse=True)
-print sortedWordTracker[:100]
+print "\n{:^7} {:^6}".format("Word","Count")
+print "-"*(7+1+6)
+for i in sortedWordTracker[:50]:
+  print "{:>7} {:>6,}".format(i[0],i[1])
 
-print "Method 1 (Counter): %f seconds\nMethod 2 (John): %f seconds" %(t2_counter-t1_counter,t2_tracker-t1_tracker)
+print "\nMethod 1 (Counter): %f seconds\nMethod 2 (John): %f seconds" %(t2_counter-t1_counter,t2_tracker-t1_tracker)
 
 with open('results.csv','w+') as f:
   for i in sortedWordTracker:
